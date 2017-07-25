@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { LOTTOGAMES, FANTASYOPTION, FLORIDAOPTION } from './mock-lottery';
-import { LottoGame, LottoNumber } from './lottery';
+import { LottoGame, LottoNumber, LottoOption } from './lottery';
 
 @Injectable()
 export class LotteryService {
@@ -14,8 +14,8 @@ export class LotteryService {
     return Promise.resolve(LOTTOGAMES);
   }
 
-  getPickOptions(valueName: string, value: string): Promise<LottoNumber[]> {
-    let vn: LottoNumber[];
+  getPickOptions(valueName: string, value: string): Promise<LottoOption> {
+    let vn: LottoOption;
     switch (valueName) {
       case 'FANTASYOPTION': vn = FANTASYOPTION[value];
         break;

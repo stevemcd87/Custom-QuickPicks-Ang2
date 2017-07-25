@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 import { LotteryService } from '../lottery.service';
-import { LottoGame, LottoNumber } from '../lottery';
+import { LottoGame, LottoNumber, LottoOption } from '../lottery';
 
 @Component({
   selector: 'app-top-picks',
@@ -28,7 +28,7 @@ export class TopPicksComponent implements OnInit {
 
   topPicksForm: FormGroup;
   topPickOptionsControls: FormControl;
-  selectedTP: LottoNumber[];
+  selectedTP: LottoOption;
 
   constructor(private fb: FormBuilder, private ls: LotteryService) { }
 
