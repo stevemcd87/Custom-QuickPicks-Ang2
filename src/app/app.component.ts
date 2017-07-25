@@ -8,7 +8,19 @@ import { LotteryService } from './lottery.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  // templateUrl: './app.component.html',
+  template: `
+  <h1>{{title}}</h1>
+<div *ngIf="step > 1">
+  <button type="button" (click)="step = 1">Back to Step 1</button>
+</div>
+<form *ngIf="step === 1" [formGroup]="appForm">
+  <input type="radio" formControlName="lotteryGameOptions" value="0">Fantasy 5
+  <input type="radio" formControlName="lotteryGameOptions" value="1"> Florida Lotto
+  <button type="button" (click)="onSelect(lotteryGameOptionsControls.value)">next step </button>
+</form>
+<app-top-picks *ngIf="step > 1" [lottoGame]="selectedLG"></app-top-picks>
+`,
   styleUrls: ['./app.component.css']
 })
 
