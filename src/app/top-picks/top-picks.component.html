@@ -1,0 +1,11 @@
+<p>
+  top-picks works!
+</p>
+<form [formGroup]="topPicksForm">
+  <input type="radio" formControlName="topPickOptions" value="1">First Pick
+  <input type="radio" formControlName="topPickOptions" value="2"> Second Pick
+  <input type="radio" formControlName="topPickOptions" value="3"> Custom
+  <button type="button" (click)="ls.stepPlusOne(step)">next step </button>
+</form>
+
+<!-- *ngIf="lotteryGameOptionsControls.value === lottoGame.valueName " -->
