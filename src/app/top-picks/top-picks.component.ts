@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
+import { CustomPickComponent } from '../custom-pick/custom-pick.component';
 import { LotteryService } from '../lottery.service';
 import { LottoGame, LottoNumber, LottoOption } from '../lottery';
 
@@ -13,7 +14,8 @@ import { LottoGame, LottoNumber, LottoOption } from '../lottery';
   <input type="radio" formControlName="topPickOptions" value="0">First Pick
   <input type="radio" formControlName="topPickOptions" value="1"> Second Pick
   <input type="radio" formControlName="topPickOptions" value="2"> Custom
-  <button type="button" (click)="ls.stepPlusOne(step)">next step </button>
+  <button type="button" (click)="console.log('next step')">next step </button>
+  <app-custom-pick *ngIf="customLotto === true"></app-custom-pick>
 </form>`,
   styleUrls: ['./top-picks.component.css']
 })
@@ -29,6 +31,7 @@ export class TopPicksComponent implements OnInit {
   topPicksForm: FormGroup;
   topPickOptionsControls: FormControl;
   selectedTP: LottoOption;
+  customLotto = false;
 
   constructor(private fb: FormBuilder, private ls: LotteryService) { }
 
@@ -41,7 +44,6 @@ export class TopPicksComponent implements OnInit {
     this.maxNumber = this.lottoGame.maxNumber;
   }
 
-
   createForm() {
     this.topPicksForm = this.fb.group({
       topPickOptions: this.fb.control(null)
@@ -49,10 +51,18 @@ export class TopPicksComponent implements OnInit {
     this.topPickOptionsControls = this.topPicksForm.get('topPickOptions') as FormControl;
     this.topPickOptionsControls.valueChanges
       .subscribe(value => {
-        this.ls.getPickOptions(this.valueName, value).then(LNs => {
-          this.selectedTP = LNs;
-          console.log(this.selectedTP);
-        });
+        Number(value);
+        console.log(value);
+        if (value < 2) {
+          this.ls.getPickOptions(this.valueName, value).then(LNs => {
+            this.selectedTP = LNs;
+            this.customLotto = false;
+            console.log(this.selectedTP);
+          });
+        } else {
+          this.customLotto = true;
+        }
       });
   } // End of CreateForm()
+
 }

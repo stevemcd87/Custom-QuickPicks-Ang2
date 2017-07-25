@@ -5,5 +5,6 @@
   <input type="radio" formControlName="topPickOptions" value="0">First Pick
   <input type="radio" formControlName="topPickOptions" value="1"> Second Pick
   <input type="radio" formControlName="topPickOptions" value="2"> Custom
-  <button type="button" (click)="ls.stepPlusOne(step)">next step </button>
+  <button type="button" (click)="console.log('next step')">next step </button>
+  <app-custom-pick *ngIf="customLotto === true"></app-custom-pick>
 </form>
