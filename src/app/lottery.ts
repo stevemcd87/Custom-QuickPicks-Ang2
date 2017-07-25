@@ -5,3 +5,9 @@ export class LottoGame {
     lotteryLength: number;
     maxNumber: number;
 }
+
+export class LottoNumber {
+    startNumber: number;
+    increment: number;
+    endNumber: number;
+}

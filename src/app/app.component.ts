@@ -4,22 +4,8 @@ import { TopPicksComponent } from './top-picks/top-picks.component';
 import { LottoGame } from './lottery';
 import { LotteryService } from './lottery.service';
 
-const LOTTOGAMES: LottoGame[] = [
-  {
-    id: 0,
-    name: 'Fantasy 5',
-    valueName: 'fantasy5',
-    lotteryLength: 5,
-    maxNumber: 36
-  },
-  {
-    id: 1,
-    name: 'Florida Lotto',
-    valueName: 'floridaLotto',
-    lotteryLength: 6,
-    maxNumber: 40
-  }
-];
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -30,18 +16,15 @@ export class AppComponent implements OnInit {
   step = 1;
   appForm: FormGroup;
   lotteryGameOptionsControls: FormControl;
+  lottoGames: LottoGame[];
   selectedLG: LottoGame;
-
-
-  lottoGames = LOTTOGAMES;
-
-
   title = 'Lotto Quick Picks';
+
   constructor(private fb: FormBuilder, private ls: LotteryService) { }
+
   ngOnInit() {
-
+    this.getLottoGames();
     this.createForm();
-
   }
   createForm() {
     this.appForm = this.fb.group({
@@ -51,11 +34,12 @@ export class AppComponent implements OnInit {
     this.lotteryGameOptionsControls.valueChanges
       .subscribe(value => value);
   } // End of CreateForm()
-  onSelect(value: string): void {
-    Number(value);
-    this.selectedLG = LOTTOGAMES[value];
-    this.step = this.ls.stepPlusOne(this.step);
+  getLottoGames() {
+    this.ls.getLottoGames().then(LGs => this.lottoGames = LGs);
   }
-
-
-}
+  onSelect(value: string): void {
+    this.selectedLG = this.ls.onSelect(value);
+    this.step = this.ls.stepPlusOne(this.step);
+    console.log(this.selectedLG);
+  }
+}// End of Class
