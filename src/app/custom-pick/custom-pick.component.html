@@ -1,3 +1,18 @@
 <p>
   custom-pick works!
 </p>
+<section [formGroup]="customFG">
+  <div formArrayName="customLNs">
+    <div *ngFor="let lottoNumber of customArray.controls; let i = index">
+      <div>
+        <div formGroupName="{{i}}">
+          <label><input formControlName="startNumber" type="number" >Start </label>
+          <label><input formControlName="increment" type="number" >Inc </label>
+          <label><input formControlName="endNumber" type="number"  >end </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <button type="button" (click)="addLottoNumber()">add</button>
+</section>
