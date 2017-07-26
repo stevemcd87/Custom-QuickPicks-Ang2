@@ -15,18 +15,13 @@ import { LottoGame, LottoNumber, LottoOption } from '../lottery';
   <input type="radio" formControlName="topPickOptions" value="1"> Second Pick
   <input type="radio" formControlName="topPickOptions" value="2"> Custom
   <button type="button" (click)="console.log('next step')">next step </button>
-  <app-custom-pick *ngIf="customLotto === true"></app-custom-pick>
+  <app-custom-pick *ngIf="customLotto === true" [lottoGame]="lottoGame"></app-custom-pick>
 </form>`,
   styleUrls: ['./top-picks.component.css']
 })
 export class TopPicksComponent implements OnInit {
   @Input() lottoGame: LottoGame;
-  id: number;
-  name: string;
   valueName: string;
-  lotteryLength: number;
-  maxNumber: number;
-
 
   topPicksForm: FormGroup;
   topPickOptionsControls: FormControl;
@@ -37,11 +32,7 @@ export class TopPicksComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.id = this.lottoGame.id;
-    this.name = this.lottoGame.name;
     this.valueName = this.lottoGame.valueName;
-    this.lotteryLength = this.lottoGame.lotteryLength;
-    this.maxNumber = this.lottoGame.maxNumber;
   }
 
   createForm() {
@@ -63,6 +54,5 @@ export class TopPicksComponent implements OnInit {
           this.customLotto = true;
         }
       });
-  } // End of CreateForm()
-
-}
+  }
+} // End of Class

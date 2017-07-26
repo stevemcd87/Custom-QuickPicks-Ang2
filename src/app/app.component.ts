@@ -4,8 +4,6 @@ import { TopPicksComponent } from './top-picks/top-picks.component';
 import { LottoGame } from './lottery';
 import { LotteryService } from './lottery.service';
 
-
-
 @Component({
   selector: 'app-root',
   // templateUrl: './app.component.html',
