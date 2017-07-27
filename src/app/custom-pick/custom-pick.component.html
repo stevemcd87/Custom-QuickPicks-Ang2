@@ -27,5 +27,5 @@
       </div>
     </div>
   </div>
-  <button type="button" (click)="addLottoNumber()">add</button>
+  <button *ngIf="customFG.valid" type="button" (click)="addLottoNumber()">add</button>
 </section>

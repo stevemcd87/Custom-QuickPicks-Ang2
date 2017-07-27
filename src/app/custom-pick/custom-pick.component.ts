@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LottoNumber, LottoGame } from '../lottery';
+import { CustomValidators } from '../custom-validators';
 @Component({
   selector: 'app-custom-pick',
   templateUrl: './custom-pick.component.html',
@@ -25,12 +26,6 @@ export class CustomPickComponent implements OnInit {
     this.valueName = this.lottoGame.valueName;
     this.lotteryLength = this.lottoGame.lotteryLength;
     this.maxNumber = this.lottoGame.maxNumber;
-
-    console.log(this.id);
-    console.log(this.name);
-    console.log(this.valueName);
-    console.log(this.lotteryLength);
-    console.log(this.maxNumber);
   }
 
   createForm() {
@@ -42,7 +37,9 @@ export class CustomPickComponent implements OnInit {
           endNumber: this.fb.control(10)
         })
       ])
-    });
+    }, {
+        validator: CustomValidators.checkLN('customLNs', this.lottoGame)
+      });
     this.customArray = this.customFG.get('customLNs') as FormArray;
   }
 
@@ -56,6 +53,5 @@ export class CustomPickComponent implements OnInit {
       increment: this.fb.control(1),
       endNumber: this.fb.control(nextEN)
     }));
-    console.error(this.customArray);
   }
 } // End Of Class
