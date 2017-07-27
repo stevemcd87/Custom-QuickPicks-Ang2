@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TopPicksComponent } from './top-picks/top-picks.component';
 import { LottoGame } from './lottery';
 import { LotteryService } from './lottery.service';
@@ -15,7 +15,7 @@ import { LotteryService } from './lottery.service';
 <form *ngIf="step === 1" [formGroup]="appForm">
   <input type="radio" formControlName="lotteryGameOptions" value="0">Fantasy 5
   <input type="radio" formControlName="lotteryGameOptions" value="1"> Florida Lotto
-  <button type="button" (click)="onSelect(lotteryGameOptionsControls.value)">next step </button>
+  <button *ngIf="lottoGameControls.valid" type="button" (click)="onSelect(lottoGameControls.value)">next step </button>
 </form>
 <app-top-picks *ngIf="step > 1" [lottoGame]="selectedLG"></app-top-picks>
 `,
@@ -25,7 +25,7 @@ import { LotteryService } from './lottery.service';
 export class AppComponent implements OnInit {
   step = 1;
   appForm: FormGroup;
-  lotteryGameOptionsControls: FormControl;
+  lottoGameControls: FormControl;
   lottoGames: LottoGame[];
   selectedLG: LottoGame;
   title = 'Lotto Quick Picks';
@@ -38,10 +38,10 @@ export class AppComponent implements OnInit {
   }
   createForm() {
     this.appForm = this.fb.group({
-      lotteryGameOptions: this.fb.control(null)
+      lotteryGameOptions: this.fb.control(null, Validators.required)
     });
-    this.lotteryGameOptionsControls = this.appForm.get('lotteryGameOptions') as FormControl;
-    this.lotteryGameOptionsControls.valueChanges
+    this.lottoGameControls = this.appForm.get('lotteryGameOptions') as FormControl;
+    this.lottoGameControls.valueChanges
       .subscribe(value => value);
   } // End of CreateForm()
   getLottoGames() {

@@ -1,0 +1,29 @@
+.lottoNumber {
+  display: block;
+  padding: .5em;
+}
+
+.lottoNumber input {
+  width: 50px;
+}
+
+.customArray {
+  padding: .2em .2em;
+  list-style-type: none;
+  margin: .1em .1em;
+  display: inline-block;
+}
+
+.customArray li {
+  cursor: pointer;
+  background: lightgray;
+  padding: .1em .3em;
+  margin-bottom: .1em;
+}
+
+#customDiv {
+  text-align: center;
+  padding: .5em;
+  display: inline-block;
+  background: darkgray;
+}

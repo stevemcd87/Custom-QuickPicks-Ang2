@@ -13,18 +13,19 @@ export class CustomPickComponent implements OnInit {
   valueName: string;
   lotteryLength: number;
   maxNumber: number;
+
   customFG: FormGroup;
   customArray: FormArray;
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.createForm();
-
     this.id = this.lottoGame.id;
     this.name = this.lottoGame.name;
     this.valueName = this.lottoGame.valueName;
     this.lotteryLength = this.lottoGame.lotteryLength;
     this.maxNumber = this.lottoGame.maxNumber;
+
     console.log(this.id);
     console.log(this.name);
     console.log(this.valueName);
@@ -55,6 +56,6 @@ export class CustomPickComponent implements OnInit {
       increment: this.fb.control(1),
       endNumber: this.fb.control(nextEN)
     }));
-    console.log(this.customArray.value);
+    console.error(this.customArray);
   }
 } // End Of Class
