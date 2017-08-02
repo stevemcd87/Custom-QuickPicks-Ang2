@@ -21,11 +21,34 @@
       <div *ngIf="i === customArray.controls.length - 1">
         <div formGroupName="{{i}}">
           <label class="lottoNumber">Start Number: <input formControlName="startNumber" type="number" ></label>
+          <div *ngIf="currentSN.errors">
+            <div *ngIf="currentSN.errors.checkLN">
+              <p *ngIf="startMin !== startMax">Must choose a number greater then <span *ngIf="customArray.controls.length > 1">the last Lotto Number's  Start Value = </span>                {{startMin}} and less than current Lotto Number's End Value = {{startMax}}</p>
+              <p *ngIf="startMin === startMax">Must choose the number {{startMin}}</p>
+            </div>
+          </div>
           <label class="lottoNumber">Increment: <input formControlName="increment" type="number" ></label>
+          <div *ngIf="currentInc.errors">
+            <div *ngIf="currentInc.errors.checkLN">
+              <p *ngIf="currentSN.errors && currentInc.dirty">Start Number must be valid to choose an Increment </p>
+              <p *ngIf="currentSN.valid && incMin !== incMax">Must choose a number from {{incMin}} to {{incMax}}</p>
+              <p *ngIf="currentSN.valid && incMin === incMax">Must choose the number {{incMin}}</p>
+            </div>
+          </div>
           <label class="lottoNumber">End Number: <input formControlName="endNumber" type="number"></label>
+          <div *ngIf="currentEN.errors">
+            <div *ngIf="currentEN.errors.checkLN">
+              <p *ngIf="currentSN.errors && currentEN.dirty">Start Number must be valid to choose an End Number </p>
+              <p *ngIf="currentSN.valid && endMin !== endMax">Must choose a number from {{endMin}} to {{endMax}}</p>
+              <p *ngIf="currentSN.valid && endMin === endMax">Must choose the number {{endMin}}</p>
+            </div>
+          </div>
         </div>
+        <button *ngIf="customFG.valid" type="button" (click)="addLottoNumber()">add</button>
       </div>
     </div>
   </div>
-  <button *ngIf="customFG.valid" type="button" (click)="addLottoNumber()">add</button>
+
+
+
 </section>

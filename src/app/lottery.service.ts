@@ -26,6 +26,8 @@ export class LotteryService {
 
   }
 
+
+
   onSelect(value: string): LottoGame {
     Number(value);
     return LOTTOGAMES[value];
