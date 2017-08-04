@@ -5,6 +5,7 @@
 
 .lottoNumber input {
   width: 50px;
+  margin-right: .5rem;
 }
 
 .customArray {
@@ -19,6 +20,16 @@
   background: lightgray;
   padding: .1em .3em;
   margin-bottom: .1em;
+}
+
+.invalid {
+  color: red;
+}
+
+button.show-rules {
+  padding: 0;
+  margin-left: .5rem;
+  /* display: inline-block; */
 }
 
 #customDiv {

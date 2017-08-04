@@ -17,7 +17,7 @@ import { LotteryService } from './lottery.service';
   <input type="radio" formControlName="lotteryGameOptions" value="1"> Florida Lotto
   <button *ngIf="lottoGameControls.valid" type="button" (click)="onSelect(lottoGameControls.value)">next step </button>
 </form>
-<app-top-picks *ngIf="step > 1" [lottoGame]="selectedLG"></app-top-picks>
+<app-top-picks *ngIf="step > 1" [lG]="selectedLG"></app-top-picks>
 `,
   styleUrls: ['./app.component.css']
 })

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { CustomPickComponent } from '../custom-pick/custom-pick.component';
 import { LotteryService } from '../lottery.service';
 import { LottoGame, LottoNumber, LottoOption } from '../lottery';
-import { CustomValidators } from '../custom-validators';
+import { CValidators } from '../custom-validators';
 @Component({
   selector: 'app-top-picks',
   // templateUrl: './top-picks.component.html',
@@ -15,12 +15,12 @@ import { CustomValidators } from '../custom-validators';
   <input type="radio" formControlName="topPickOptions" value="1"> Second Pick
   <input type="radio" formControlName="topPickOptions" value="custom"> Custom
   <button *ngIf="topPicksForm.valid" type="button">next step </button>
-  <app-custom-pick *ngIf="customLotto === true" [lottoGame]="lottoGame"></app-custom-pick>
+  <app-custom-pick *ngIf="customLotto === true" [lG]="lG"></app-custom-pick>
 </form>`,
   styleUrls: ['./top-picks.component.css']
 })
 export class TopPicksComponent implements OnInit {
-  @Input() lottoGame: LottoGame;
+  @Input() lG: LottoGame;
   valueName: string;
 
   topPicksForm: FormGroup;
@@ -32,14 +32,14 @@ export class TopPicksComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.valueName = this.lottoGame.valueName;
+    this.valueName = this.lG.valueName;
   }
 
   createForm() {
     this.topPicksForm = this.fb.group({
       topPickOptions: this.fb.control(null)
     }, {
-        validator: CustomValidators.checkTP('topPickOptions')
+        validator: CValidators.checkTP('topPickOptions')
       });
     this.topPickOptionsControls = this.topPicksForm.get('topPickOptions') as FormControl;
     this.topPickOptionsControls.valueChanges
