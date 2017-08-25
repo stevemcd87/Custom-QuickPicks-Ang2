@@ -38,3 +38,7 @@ button.show-rules {
   display: inline-block;
   background: darkgray;
 }
+
+.error {
+  color: red;
+}

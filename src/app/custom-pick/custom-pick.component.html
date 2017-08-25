@@ -17,49 +17,64 @@
     <div *ngFor="let lottoNumber of customArray.controls; let i = index">
       <div *ngIf="i === customArray.controls.length - 1">
         <div formGroupName="{{i}}">
+
           <!-- Start Number -->
-          <label class="lottoNumber">Start Number: <input formControlName="startNumber" type="number" ></label>
-          <div *ngIf="currentSN.errors">
-            <!-- Start Number less then MIN -->
-            <ul *ngIf="currentSN.errors.LNmin">
-              <li> <span class="start-number">Start Number</span> must be a number greater then <span *ngIf="customArray.controls.length > 1"> <span class="end-number">End Number</span>                current value = </span> {{startMin}}
-              </li>
-            </ul>
-            <!-- Start Number greater then MAX -->
-            <ul *ngIf="currentSN.errors.LNmax">
-              <li><span class="start-number">Start Number</span> must be a number less than <span class="end-number">End Number</span>                : {{startMax}}</li>
-              <li *ngIf="currentEN.value !== endMax">You can set <span class="end-number">End Number</span> value to a maximum of {{endMax}} </li>
-            </ul>
+          <div class="lottoNumber">
+            <label>Start Number: <input formControlName="startNumber" type="number" >{{startMin}} - {{startMax}}</label>
+            <button class="show-rules" (click)="toggleShowRules('srsn' ,showRulesSN)">{{showRulesSN ? 'Hide' : 'Show'}} Guide Lines</button>
           </div>
+          <ul *ngIf="currentSN.errors || showRulesSN">
+            <li *ngIf="(currentSN.errors && currentSN.errors.LNmin)  || showRulesSN" [class.error]="(currentSN.errors && currentSN.errors.LNmin)">
+              <span class="start-number">Start Number</span> must be less than
+              <span *ngIf="customArray.controls.length > 1">
+                   <span class="end-number">End Number</span> current value = </span> {{startMin}} </li>
+
+            <li *ngIf="(currentSN.errors && currentSN.errors.LNmax)  || showRulesSN" [class.error]="(currentSN.errors && currentSN.errors.LNmax)">
+              <span class="start-number">Start Number</span> must be a number less than
+              <span class="end-number">End Number</span> : {{startMax}}</li>
+          </ul>
           <!-- Increment -->
           <div class="lottoNumber">
             <label>Increment: <input formControlName="increment" type="number"> {{(currentSN.valid && currentEN.valid) ? incMin : '?'}} - {{(currentSN.valid && currentEN.valid)  ? incMax : '?'}}</label>
-            <button class="show-rules" (click)="toggleShowRules('sri' ,this.showRulesInc) ">{{showRulesInc ? 'Hide' : 'Show'}} Guide Lines</button>
+            <button class="show-rules" (click)="toggleShowRules('sri' ,showRulesInc)">{{showRulesInc ? 'Hide' : 'Show'}} Guide Lines</button>
           </div>
-          <!-- <div *ngIf="showRulesInc">
-            <li><span class="start-number">Start Number</span> must be valid to choose an Increment </li>
-            <li><span class="end-number">End Number</span> must be valid to choose an Increment </li>
-            <li><span class="inc-number">Increment Number</span> must be a minimum of 1, unless <span class="start-number">Start Number</span>              and <span class="end-number">End Number</span> are equal in which case the mandatory <span class="inc-number">Increment Number</span>              will be 0</li>
-            <li><span class="end-number">End Number</span> minus <span class="start-number">Start Number</span> will be the maximum
+
+          <ul *ngIf="currentInc.errors || (showRulesInc)">
+            <li *ngIf="(currentSN.invalid) || (showRulesInc)" [class.error]="currentSN.invalid">
+              <span class="start-number">Start Number</span> must be valid to choose an Increment </li>
+
+            <li *ngIf="currentEN.errors || showRulesInc " [class.error]="currentEN.invalid">
+              <span class="end-number">End Number</span> must be valid to choose an Increment </li>
+
+            <li *ngIf="((currentInc.errors && currentInc.errors.LNmin) && (currentSN.valid && currentEN.valid))|| (showRulesInc)" [class.error]="(currentInc.errors && currentInc.errors.LNmin)">
+              <span class="inc-number">Increment Number</span> must be a minimum of 1, unless
+              <span class="start-number">Start Number</span> and
+              <span class="end-number">End Number</span> are equal in which case
+              <span class="inc-number">Increment Number</span> must be 0</li>
+
+            <li *ngIf="((currentInc.errors && currentInc.errors.LNmax)  && (currentSN.valid && currentEN.valid))|| (showRulesInc)" [class.error]="(currentInc.errors && currentInc.errors.LNmax)">
+              <span class="end-number">End Number</span> value minus
+              <span class="start-number">Start Number</span> value will be the maximum
               <span class="inc-number">Increment Number</span></li>
-          </div>  -->
-          <ul *ngIf="currentInc.errors || showRulesInc ">
-            <li [class.invalid]="currentSN.invalid && currentSN.touched" *ngIf="(currentSN.invalid && currentSN.touched) || (showRulesInc)"><span class="start-number">Start Number</span> must be valid to choose an Increment </li>
-            <li *ngIf="currentEN.invalid && currentEN.touched || (showRulesInc)"><span class="end-number">End Number</span> must be valid to choose an Increment </li>
-            <div *ngIf="currentInc.errors.LNmin">
-              <li *ngIf="(currentSN.valid && currentEN.valid && currentEN.value !== currentSN.value)  || (showRulesInc)"><span class="inc-number">Increment Number</span> must be a minimum of 1, unless <span class="start-number">Start Number</span>                and <span class="end-number">End Number</span> are equal in which case <span class="inc-number">Increment Number</span>                must be 0</li>
-            </div>
-            <li *ngIf="(currentSN.valid && currentEN.valid && currentEN.value === currentSN.value)  || (showRulesInc)">"Increment" must be {{incMin}}</li>
           </ul>
           <!-- End Number -->
-          <label class="lottoNumber">End Number: <input formControlName="endNumber" type="number"></label>
-          <div *ngIf="currentEN.errors">
-            <p *ngIf="currentSN.errors && currentEN.dirty"><span class="end-number">End Number</span> must be greater then <span class="start-number">Start Number</span>              </p>
-            <p *ngIf="currentSN.valid && endMin !== endMax"><span class="end-number">End Number </span>must be a number from {{endMin}} to {{endMax}}</p>
-            <p *ngIf="currentSN.valid && endMin === endMax">Must choose the number {{endMin}}</p>
+          <div class="lottoNumber">
+            <label>End Number: <input formControlName="endNumber" type="number">{{endMin}} - {{endMax}}</label>
+            <button class="show-rules" (click)="toggleShowRules('sren' ,showRulesEN)">{{showRulesSN ? 'Hide' : 'Show'}} Guide Lines</button>
           </div>
+
+          <ul *ngIf="currentEN.errors || showRulesEN">
+            <li *ngIf="(currentEN.errors && currentEN.errors.LNmin) || showRulesEN" [class.error]="(currentEN.errors && currentEN.errors.LNmin)">
+              <span class="end-number">End Number</span> must be equal or greater then the
+              <span class="start-number">Start Number</span> </li>
+            <li *ngIf="(currentEN.errors && currentEN.errors.LNmax) || showRulesEN" [class.error]="(currentEN.errors && currentEN.errors.LNmax)">
+              <span class="end-number">End Number</span> must be equal or less then {{endMax}}</li>
+          </ul>
         </div>
-        <button *ngIf="customFG.valid" type="button" (click)="addLottoNumber()">add</button>
+        <button *ngIf="currentSN.valid && currentInc.valid && currentSN.valid && customArray.length < lotteryLength" type="button"
+          (click)="addLottoNumber()">add</button>
+        <button *ngIf="(currentSN.valid && currentInc.valid && currentSN.valid) && customArray.length === lotteryLength" type="button"
+          (click)="genLN()">Generate Lotto Numbers</button>
       </div>
     </div>
   </div>

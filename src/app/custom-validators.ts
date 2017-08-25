@@ -1,7 +1,9 @@
 export class CValidators {
-    static checkTP(controlName) {
+    static checkTP(controlName: string) {
         return (control) => {
             const controlValue = control.get(controlName).value;
+            console.log(control);
+
             return (controlValue) && (controlValue !== 'custom') ? null : { checkTP: true };
         };
     }
@@ -28,7 +30,7 @@ export class CValidators {
                         }
                         break;
                     case objectKey === 'increment':
-                        if (currentLN.controls.startNumber.invalid || currentLN.controls.endNumber.invalid) {
+                        if (currentLN.controls.startNumber.invalid) {
                             min = null;
                         } else {
                             (SNvalue === currentEN) ? min = 0 : min = 1;
@@ -38,9 +40,9 @@ export class CValidators {
                         if (arrayLength > 1) {
                             const lastLN = parentControl.get([arrayLength - 2]);
                             const lastSN = lastLN.value.startNumber;
-                            (SNvalid === true) ? min = SNvalue : min = lastSN + 1;
+                            (SNvalue !== null) ? min = SNvalue : min = lastSN + 1;
                         } else {
-                            (SNvalid === true) ? min = SNvalue : min = 1;
+                            (SNvalue !== null) ? min = SNvalue : min = 1;
                         }
                         break;
                 }
@@ -111,10 +113,33 @@ export class CValidators {
                 const lastEN = lastLN.endNumber;
                 startMin = lastSN + 1;
             }
+            console.log(arrayControl);
             return (currentSN === null) || (currentSN > startMax) || (currentSN < startMin) ||
                 (currentInc === null) || (currentInc > incMax) || (currentInc < incMin) ||
                 (currentEN === null) || (currentEN > endMax) || (currentEN < endMin)
                 ? { checkLN: true } : null;
+            // return (currentSN.valid) && (currentEN.valid) && (currentInc.valid) ? { checkLN: true } : null;
+        };
+    }
+    static checkCurrentLN() {
+        return (control) => {
+            console.log(control);
+            // const arrayControl = control.parent;
+            // const arrayLength = arrayControl.value.length;
+            // const currentLN = arrayControl[arrayLength - 1];
+            const currentSN = control.get('startNumber');
+            const currentInc = control.get('increment');
+            const currentEN = control.get('endNumber');
+
+            // console.log(arrayControl);
+            console.log(currentSN);
+            console.log(currentInc);
+            console.log(currentEN);
+
+            return (currentSN.invalid || currentEN.invalid || currentInc.invalid)
+                // (currentEN.invalid) && (currentInc.invalid)
+                ? { checkCurrentLN: true } : null;
+            // return (currentSN.valid) && (currentEN.valid) && (currentInc.valid) ? { checkLN: true } : null;
         };
     }
 }
