@@ -42,3 +42,7 @@ button.show-rules {
 .error {
   color: red;
 }
+
+#lottoList {
+  width: 80%;
+}

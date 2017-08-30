@@ -16,3 +16,7 @@ export class LottoNumber {
     increment: number;
     endNumber: number;
 }
+export class LottoList {
+    id: number;
+    lotto: number[];
+}

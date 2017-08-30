@@ -39,8 +39,9 @@ export class CValidators {
                     case objectKey === 'endNumber':
                         if (arrayLength > 1) {
                             const lastLN = parentControl.get([arrayLength - 2]);
-                            const lastSN = lastLN.value.startNumber;
-                            (SNvalue !== null) ? min = SNvalue : min = lastSN + 1;
+                            const lastEN = lastLN.value.endNumber;
+                            console.log('lastEN - ' + lastEN);
+                            (SNvalue !== null && SNvalue > lastEN) ? min = SNvalue : min = lastEN + 1;
                         } else {
                             (SNvalue !== null) ? min = SNvalue : min = 1;
                         }
@@ -78,6 +79,7 @@ export class CValidators {
                             max = null;
                         } else {
                             (currentSN === currentEN) ? max = 0 : max = currentEN - currentSN;
+                            (max % currentInc !== 0) ? max = null : max = currentEN - currentSN;
                         }
                         break;
                     case objectKey === 'endNumber':

@@ -52,10 +52,16 @@
               <span class="end-number">End Number</span> are equal in which case
               <span class="inc-number">Increment Number</span> must be 0</li>
 
-            <li *ngIf="((currentInc.errors && currentInc.errors.LNmax)  && (currentSN.valid && currentEN.valid))|| (showRulesInc)" [class.error]="(currentInc.errors && currentInc.errors.LNmax)">
+            <li *ngIf="((currentInc.errors && currentInc.errors.LNmax)  && (currentSN.valid && currentEN.valid)) && ((currentEN.value - currentSN.value) % currentInc === 0 )|| (showRulesInc)"
+              [class.error]="(currentInc.errors && currentInc.errors.LNmax) && ((currentEN.value - currentSN.value) % currentInc === 0 )">
               <span class="end-number">End Number</span> value minus
               <span class="start-number">Start Number</span> value will be the maximum
               <span class="inc-number">Increment Number</span></li>
+            <li *ngIf="((currentInc.errors && currentInc.errors.LNmax)  && (currentSN.valid && currentEN.valid)) && ((currentEN.value - currentSN.value) % currentInc !== 0 )|| (showRulesInc)"
+              [class.error]="(currentInc.errors && currentInc.errors.LNmax) && ((currentEN.value - currentSN.value) % currentInc !== 0 )">
+
+              <span class="inc-number">Increment Number</span> must be divisible by {{incMax}}
+            </li>
           </ul>
           <!-- End Number -->
           <div class="lottoNumber">
@@ -75,8 +81,21 @@
           (click)="addLottoNumber()">add</button>
         <button *ngIf="(currentSN.valid && currentInc.valid && currentSN.valid) && customArray.length === lotteryLength" type="button"
           (click)="genLN()">Generate Lotto Numbers</button>
+        <button *ngIf="(currentSN.valid && currentInc.valid && currentSN.valid) && customArray.length === lotteryLength" type="button"
+          (click)="genLN2()">Generate Lotto Numbers2</button>
       </div>
     </div>
   </div>
+  <div *ngIf="lottoList">
+    <table id="lottoList">
+      <tr *ngFor="let lotto of lottoList">
+        <td>{{lotto.id}}
+        </td>
+        <td>{{lotto.lotto}}
+        </td>
+      </tr>
+    </table>
+  </div>
+
 
 </section>

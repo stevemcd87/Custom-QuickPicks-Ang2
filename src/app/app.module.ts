@@ -6,6 +6,7 @@ import { TopPicksComponent } from './top-picks/top-picks.component';
 import { CustomPickComponent } from './custom-pick/custom-pick.component';
 import { LotteryService } from './lottery.service';
 import { LotteryGeneratorService } from './lottery-generator.service';
+import { Fantasy5GeneratorService } from './fantasy5-generator.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { LotteryGeneratorService } from './lottery-generator.service';
     BrowserModule,
     ReactiveFormsModule
   ],
-  providers: [LotteryService, LotteryGeneratorService],
+  providers: [LotteryService, LotteryGeneratorService, Fantasy5GeneratorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

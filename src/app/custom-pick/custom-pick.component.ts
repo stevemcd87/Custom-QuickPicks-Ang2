@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LottoNumber, LottoGame } from '../lottery';
+import { LottoNumber, LottoGame, LottoList } from '../lottery';
 import { CValidators } from '../custom-validators';
 import { LotteryGeneratorService } from '../lottery-generator.service';
+import { Fantasy5GeneratorService } from '../fantasy5-generator.service';
 
 
 @Component({
@@ -36,10 +37,11 @@ export class CustomPickComponent implements OnInit {
   showRulesInc = false;
   showRulesEN = false;
 
-  lottoList: number[][];
+  lottoList: LottoList[] = [];
 
   constructor(private fb: FormBuilder,
-    private lgs: LotteryGeneratorService) { }
+    private lgs: LotteryGeneratorService,
+    private fgs: Fantasy5GeneratorService) { }
 
   ngOnInit() {
     this.makePromise(this.createForm()).then(() => {
@@ -174,7 +176,12 @@ export class CustomPickComponent implements OnInit {
 
   genLN() {
     console.log('GenLN()');
-    this.lottoList = this.lgs.genLottoArgs(this.customArray.value);
+    this.lottoList = this.fgs.genLottoArgs(this.customArray.value);
     console.log(this.lottoList);
   }
+  // genLN2() {
+  //   console.log('GenLN2()');
+  //   this.lottoList = this.lgs.genLottoArgs(this.customArray.value);
+  //   console.log(this.lottoList);
+  // }
 } // End Of Class
