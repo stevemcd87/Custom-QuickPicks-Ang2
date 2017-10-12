@@ -43,6 +43,6 @@ button.show-rules {
   color: red;
 }
 
-#lottoList {
-  width: 80%;
+table#lottoList {
+  padding: .2rem;
 }

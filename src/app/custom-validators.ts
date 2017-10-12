@@ -1,10 +1,10 @@
 export class CValidators {
-    static checkTP(controlName: string) {
+    static checkTP(controlName: string, lottoList: any[]) {
         return (control) => {
             const controlValue = control.get(controlName).value;
-            console.log(control);
-
-            return (controlValue) && (controlValue !== 'custom') ? null : { checkTP: true };
+            console.log(lottoList);
+            // 
+            return ((controlValue) && (controlValue !== 'custom') || lottoList.length > 0) ? null : { checkTP: true };
         };
     }
     static LNmin(lottoGame, objectKey) {
@@ -40,7 +40,6 @@ export class CValidators {
                         if (arrayLength > 1) {
                             const lastLN = parentControl.get([arrayLength - 2]);
                             const lastEN = lastLN.value.endNumber;
-                            console.log('lastEN - ' + lastEN);
                             (SNvalue !== null && SNvalue > lastEN) ? min = SNvalue : min = lastEN + 1;
                         } else {
                             (SNvalue !== null) ? min = SNvalue : min = 1;

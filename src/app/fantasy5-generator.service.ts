@@ -19,7 +19,7 @@ export class Fantasy5GeneratorService {
 
     generateLotto(firstLotto: number[], increments: number[], lastLotto: number[]): LottoList[] {
         const lotteryList: LottoList[] = [];
-        let idn = 0;
+        let idNumber = 0;
         const currentLotto: number[] = firstLotto.slice();
         const Index: number = currentLotto.length - 1;
         currentLotto.forEach(function (val, ind, arr) {
@@ -40,9 +40,6 @@ export class Fantasy5GeneratorService {
             indexReset();
 
             function indexReset() {
-                function loop(current: number[], original: number[]): any {
-                    return spliceOrig(current, original);
-                }
 
                 if (currentLotto[index] > lastLotto[index]) {
                     spliceOrig(currentLotto, firstLotto);
@@ -53,9 +50,9 @@ export class Fantasy5GeneratorService {
                         spliceOrig(currentLotto, firstLotto);
                     }
                 }
-                idn += 1;
+                idNumber += 1;
                 lotteryList.push({
-                    id: idn,
+                    id: idNumber,
                     lotto: newArray
                 });
                 return newArray;

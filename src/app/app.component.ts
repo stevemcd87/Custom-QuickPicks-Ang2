@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TopPicksComponent } from './top-picks/top-picks.component';
-import { LottoGame } from './lottery';
+import { LottoGame, LottoList } from './lottery';
 import { LotteryService } from './lottery.service';
 
 @Component({
@@ -17,7 +17,8 @@ import { LotteryService } from './lottery.service';
   <input type="radio" formControlName="lotteryGameOptions" value="1"> Florida Lotto
   <button *ngIf="lottoGameControls.valid" type="button" (click)="onSelect(lottoGameControls.value)">next step </button>
 </form>
-<app-top-picks *ngIf="step > 1" [lG]="selectedLG"></app-top-picks>
+<app-top-picks *ngIf="step === 2" [lG]="selectedLG"></app-top-picks>
+
 `,
   styleUrls: ['./app.component.css']
 })
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   lottoGames: LottoGame[];
   selectedLG: LottoGame;
   title = 'Lotto Quick Picks';
+  lottoList: LottoList[];
 
   constructor(private fb: FormBuilder, private ls: LotteryService) { }
 

@@ -1,0 +1,12 @@
+<button (click)="compareLists()">compare</button>
+<div *ngIf="comparedList">
+  <ul *ngFor="let item of comparedList">
+    <li>{{item.date}}</li>
+    <li>{{item.winningNumber}}</li>
+    <div *ngFor="let i of item.matchedLottos ">
+      <li *ngIf="i.matchedNumbers >= 4">{{i.lotto}} - {{i.matchedNumbers}}</li>
+    </div>
+
+  </ul>
+
+</div>

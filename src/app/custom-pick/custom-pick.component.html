@@ -12,7 +12,7 @@
   </ul>
 </div>
 <!-- Custom Array -->
-<section [formGroup]="customFG">
+<section *ngIf="!customFinished" [formGroup]="customFG">
   <div formArrayName="customLNs">
     <div *ngFor="let lottoNumber of customArray.controls; let i = index">
       <div *ngIf="i === customArray.controls.length - 1">
@@ -81,21 +81,19 @@
           (click)="addLottoNumber()">add</button>
         <button *ngIf="(currentSN.valid && currentInc.valid && currentSN.valid) && customArray.length === lotteryLength" type="button"
           (click)="genLN()">Generate Lotto Numbers</button>
-        <button *ngIf="(currentSN.valid && currentInc.valid && currentSN.valid) && customArray.length === lotteryLength" type="button"
-          (click)="genLN2()">Generate Lotto Numbers2</button>
+
       </div>
     </div>
   </div>
-  <div *ngIf="lottoList">
-    <table id="lottoList">
-      <tr *ngFor="let lotto of lottoList">
-        <td>{{lotto.id}}
-        </td>
-        <td>{{lotto.lotto}}
-        </td>
-      </tr>
-    </table>
-  </div>
-
-
 </section>
+<div *ngIf="lottoList.length > 0">
+  <button [disabled]="LL10S < 10" (click)="prev10()">Prev 10</button>
+  <button [disabled]="LL10E > lottoList.length" (click)="next10()">Next 10</button>
+  <table *ngFor="let lotto of lottoList | slice: LL10S:LL10E" id="lottoList">
+    <tr>
+      <td>{{lotto.id}}</td>
+      <td>{{lotto.lotto}}</td>
+    </tr>
+
+  </table>
+</div>

@@ -4,6 +4,13 @@ export class LottoGame {
     valueName: string;
     lotteryLength: number;
     maxNumber: number;
+    winningHistory: WinningHistory[];
+}
+
+export class WinningHistory {
+    date: string;
+    winningNumber: number[];
+    x?: number;
 }
 
 export class LottoOption {
@@ -19,4 +26,12 @@ export class LottoNumber {
 export class LottoList {
     id: number;
     lotto: number[];
+    matchedNumbers?: number;
+}
+
+export class ComparedList {
+    date?: string;
+    winningNumber: number[];
+    x?: number;
+    matchedLottos: LottoList[];
 }

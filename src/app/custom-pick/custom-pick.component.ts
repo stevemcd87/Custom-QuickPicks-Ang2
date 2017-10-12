@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LottoNumber, LottoGame, LottoList } from '../lottery';
 import { CValidators } from '../custom-validators';
@@ -13,6 +13,7 @@ import { Fantasy5GeneratorService } from '../fantasy5-generator.service';
 })
 export class CustomPickComponent implements OnInit {
   @Input() lG: LottoGame;
+  @Output() llGenerated = new EventEmitter();
   name: string;
   valueName: string;
   lotteryLength: number;
@@ -38,6 +39,10 @@ export class CustomPickComponent implements OnInit {
   showRulesEN = false;
 
   lottoList: LottoList[] = [];
+  customFinished = false;
+
+  LL10S = 0;
+  LL10E = 10;
 
   constructor(private fb: FormBuilder,
     private lgs: LotteryGeneratorService,
@@ -178,10 +183,23 @@ export class CustomPickComponent implements OnInit {
     console.log('GenLN()');
     this.lottoList = this.fgs.genLottoArgs(this.customArray.value);
     console.log(this.lottoList);
+    this.llGenerated.emit(this.lottoList);
+    this.customFinished = true;
   }
-  // genLN2() {
-  //   console.log('GenLN2()');
-  //   this.lottoList = this.lgs.genLottoArgs(this.customArray.value);
-  //   console.log(this.lottoList);
-  // }
+  next10() {
+    this.LL10S += 10;
+    this.LL10E += 10;
+    if (this.LL10E > this.lottoList.length) {
+      this.LL10E = this.lottoList.length;
+      this.LL10S = this.LL10E - 10;
+    }
+  }
+  prev10() {
+    this.LL10S -= 10;
+    this.LL10E -= 10;
+    if (this.LL10S < 0) {
+      this.LL10S = 0;
+      this.LL10E = 10;
+    }
+  }
 } // End Of Class
